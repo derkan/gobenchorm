@@ -157,7 +157,7 @@ func GoDBReadSlice(b *B) {
 			b.FailNow()
 		}
 	}
-	runtime.GC()
+	/*runtime.GC()
 	memProfile, err := os.Create("/tmp/godb.mprof")
 	if err != nil {
 		log.Fatal(err)
@@ -166,5 +166,5 @@ func GoDBReadSlice(b *B) {
 	//go tool pprof --alloc_space mem /tmp/godb.mprof
 	if err := pprof.WriteHeapProfile(memProfile); err != nil {
 		log.Fatal(err)
-	}
+	}*/
 }
