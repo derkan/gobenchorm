@@ -260,7 +260,7 @@ Reports:
      db.v3:     8.18s      4091602 ns/op  463532 B/op  15300 allocs/op
  beego_orm:    11.24s      5619829 ns/op  587550 B/op  35007 allocs/op
        pop:    12.10s      6048901 ns/op  406315 B/op  16231 allocs/op
-      godb:    13.33s      6667297 ns/op 1102239 B/op  39008 allocs/op
+      godb:    12.75s      6373628 ns/op 1101025 B/op  39006 allocs/op
        qbs:    14.31s      7156007 ns/op 1734739 B/op  54135 allocs/op
        dbr:    16.90s      8449983 ns/op 2071583 B/op  45961 allocs/op
       hood:    19.36s      9680767 ns/op 2010210 B/op  86139 allocs/op
