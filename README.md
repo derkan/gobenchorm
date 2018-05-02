@@ -77,10 +77,13 @@ CREATE DATABASE benchdb
 ```go
 go get github.com/derkan/gobenchorm
 # install
+cd gobenchorm/cmd
 go install
 # build
+cd gobenchorm/cmd
 go build
 # all
+cd gobenchorm/cmd
 ./gobenchorm -multi=1 -orm=all
 # portion
 ./gobenchorm -multi=1 -orm=xorm -orm=raw -orm=godb
