@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # GO ORM Benchmarks
 
 ### About
@@ -266,3 +267,7 @@ Reports:
       xorm:    22.02s     11010617 ns/op 1277728 B/op  57111 allocs/op
       gorm:    23.06s     11530125 ns/op 2807338 B/op  65042 allocs/op
 ```
+=======
+# gobenchorm
+GO ORM/ODM benchmarks
+>>>>>>> da8af2c82c284032bcfae7dfb4fd6feff375b449
