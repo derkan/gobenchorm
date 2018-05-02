@@ -41,7 +41,7 @@ Contributions are wellcome.
     `fieldValue.SetString(string(driverValue.Elem().String()))`
 - Multi insert is too slow(over 100 seconds), need check/help
 
-### QBS
+#### QBS
 - `qbs` needs patch for reflecting `string` values:
 
     `github.com/coocood/qbs/base.go:54` should be patched to:
@@ -50,7 +50,7 @@ Contributions are wellcome.
 - `BulkInsert` is not working as expected.
 
 
-### Gorm
+#### Gorm
 - [No support for multi insert](https://github.com/jinzhu/gorm/issues/255)
 
 #### Genmai
@@ -267,7 +267,3 @@ Reports:
       xorm:    22.02s     11010617 ns/op 1277728 B/op  57111 allocs/op
       gorm:    23.06s     11530125 ns/op 2807338 B/op  65042 allocs/op
 ```
-=======
-# gobenchorm
-GO ORM/ODM benchmarks
->>>>>>> da8af2c82c284032bcfae7dfb4fd6feff375b449
