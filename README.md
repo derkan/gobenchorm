@@ -81,9 +81,9 @@ go install
 # build
 go build
 # all
-orm-benchmark -multi=20 -orm=all
+./gobenchorm -multi=1 -orm=all
 # portion
-orm-benchmark -multi=20 -orm=xorm -orm=raw
+./gobenchorm -multi=1 -orm=xorm -orm=raw -orm=godb
 ```
 
 ### Reports
