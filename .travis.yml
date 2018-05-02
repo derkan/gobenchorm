@@ -1,0 +1,22 @@
+dist: trusty
+language: go
+
+addons:
+  postgresql: "9.6"
+
+go:
+  - 1.9.x
+  - tip
+
+matrix:
+  allow_failures:
+    - go: tip
+
+
+before_install:
+  - psql -U postgres -c "CREATE ROLE bench LOGIN PASSWORD 'pass' VALID UNTIL 'infinity';"
+  - psql -U postgres -c "CREATE DATABASE benchdb WITH OWNER = bench;"
+
+install:
+  - go get -u github.com/golang/dep/...
+  - dep ensure
