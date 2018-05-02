@@ -9,7 +9,7 @@ Contributions are wellcome.
 
 ### Environment
 
-* go version go1.8 linux/amd64
+* go version go1.9 linux/amd64
 
 ### PostgreSQL
 
