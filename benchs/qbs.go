@@ -32,7 +32,7 @@ func NewQModel() *QModel {
 	return m
 }
 
-
+// initQDB recreates tables before executing any benchmark.
 func initQDB() {
 
 	sqls := []string{

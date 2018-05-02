@@ -16,7 +16,7 @@ type Model struct {
 	Right   bool
 	Counter int64
 }
-
+// NewModel initializes a new model struct for inserts
 func NewModel() *Model {
 	m := new(Model)
 	m.Name = "Orm Benchmark"
@@ -36,7 +36,7 @@ var (
 	ORM_MAX_CONN int
 	ORM_SOURCE string
 )
-
+// checkErr prints and exists on error
 func checkErr(err error) {
 	if err != nil {
 		fmt.Println(err)
@@ -44,14 +44,15 @@ func checkErr(err error) {
 	}
 }
 
+//wrapExecute sets timer for a benchmark step
 func wrapExecute(b *B, cbk func()) {
 	b.StopTimer()
 	defer b.StartTimer()
 	cbk()
 }
 
+// initDB recreates tables before executing any benchmark.
 func initDB() {
-
 	sqls := []string{
 		`DROP TABLE IF EXISTS models;`,
 		`CREATE TABLE models (

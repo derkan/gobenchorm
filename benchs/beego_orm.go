@@ -9,8 +9,8 @@ import (
 
 var bo orm.Ormer
 
+// initDB3 recreates tables before executing any benchmark.
 func initDB3() {
-
 	sqls := []string{
 		`DROP TABLE IF EXISTS beego_model;`,
 		`CREATE TABLE beego_model (

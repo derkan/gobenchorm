@@ -9,8 +9,8 @@ import (
 
 var xo *xorm.Session
 
+// initDB2 recreates tables before executing any benchmark.
 func initDB2() {
-
 	sqls := []string{
 		`DROP TABLE IF EXISTS xorm_model;`,
 		`CREATE TABLE xorm_model (

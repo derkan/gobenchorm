@@ -33,6 +33,7 @@ func NewPModel() *PModel {
 	return m
 }
 
+// initDBPop recreates tables before executing any benchmark.
 func initDBPop() {
 
 	sqls := []string{

@@ -31,7 +31,7 @@ func NewHdModel() *HdModel {
 
 	return m
 }
-
+// initHdDB recreates tables before executing any benchmark.
 func initHdDB() {
 	sqls := []string{
 		`DROP TABLE IF EXISTS hd_model;`,
