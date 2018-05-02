@@ -5,10 +5,6 @@ import (
 
 	"github.com/samonzeweb/godb"
 	"github.com/samonzeweb/godb/adapters/postgresql"
-	"log"
-	"os"
-	"runtime"
-	"runtime/pprof"
 )
 
 var godbcon *godb.DB
