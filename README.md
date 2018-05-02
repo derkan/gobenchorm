@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # GO ORM Benchmarks
 
 ### About
