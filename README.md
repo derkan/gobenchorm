@@ -28,6 +28,7 @@ Contributions are wellcome.
 * [hood](https://github.com/eaigner/hood)
 * [modl](https://github.com/jmoiron/modl)
 * [qbs](https://github.com/coocood/qbs)
+* [pop](https://github.com/gobuffalo/pop)
 
 
 ### Notes:
@@ -120,7 +121,7 @@ pg
      MultiRead limit 1000:   2000     4.13s      2063212 ns/op  233240 B/op   6025 allocs/op
 modl
                    Insert:   2000     4.10s      2052064 ns/op    2137 B/op     56 allocs/op
-       BulkInsert 100 row:    500     Not support bulk insert
+       BulkInsert 100 row:    500     Don't support bulk insert
                    Update:   2000     4.03s      2016194 ns/op    1688 B/op     52 allocs/op
                      Read:   4000     0.62s       155328 ns/op    2208 B/op     56 allocs/op
      MultiRead limit 1000:   2000     7.80s      3897565 ns/op  353337 B/op  17946 allocs/op
@@ -138,7 +139,7 @@ godb
      MultiRead limit 1000:   2000    13.33s      6667297 ns/op 1102239 B/op  39008 allocs/op
 gorm
                    Insert:   2000     4.42s      2208930 ns/op    8343 B/op    181 allocs/op
-       BulkInsert 100 row:    500     Not support bulk insert - https://github.com/jinzhu/gorm/issues/255
+       BulkInsert 100 row:    500     Don't support bulk insert - https://github.com/jinzhu/gorm/issues/255
                    Update:   2000     4.43s      2212758 ns/op    8506 B/op    207 allocs/op
                      Read:   4000     0.85s       212769 ns/op    7880 B/op    171 allocs/op
      MultiRead limit 1000:   2000    23.06s     11530125 ns/op 2807338 B/op  65042 allocs/op
@@ -150,7 +151,7 @@ genmai
      MultiRead limit 1000:   2000     6.89s      3444379 ns/op  432161 B/op  14119 allocs/op
 qbs
                    Insert:   2000     3.92s      1960408 ns/op    6610 B/op    133 allocs/op
-       BulkInsert 100 row:    500     Not support bulk insert, err driver: bad connection
+       BulkInsert 100 row:    500     Don't support bulk insert, err driver: bad connection
                    Update:   2000     4.04s      2022347 ns/op    7017 B/op    163 allocs/op
                      Read:   4000     0.43s       107389 ns/op    8024 B/op    179 allocs/op
      MultiRead limit 1000:   2000    14.31s      7156007 ns/op 1734739 B/op  54135 allocs/op
@@ -207,13 +208,13 @@ Reports:
       godb:     2.22s      4443246 ns/op  341082 B/op   7013 allocs/op
      db.v3:     2.41s      4815923 ns/op  486190 B/op  20014 allocs/op
       xorm:     2.52s      5049331 ns/op 2406760 B/op   8676 allocs/op
-      modl:     Not support bulk insert
+      modl:     Don't support bulk insert
       hood:     Problematic bulk insert, too slow
-       qbs:     Not support bulk insert, err driver: bad connection
+       qbs:     Don't support bulk insert, err driver: bad connection
       gorp:     Problematic bulk insert, too slow
        pop:     Problematic bulk insert, too slow
       sqlx:     benchmark not implemeted yet - https://github.com/jmoiron/sqlx/issues/134
-      gorm:     Not support bulk insert - https://github.com/jinzhu/gorm/issues/255
+      gorm:     Don't support bulk insert - https://github.com/jinzhu/gorm/issues/255
 
   2000 times - Update
        raw:     0.11s        56468 ns/op     856 B/op     25 allocs/op
