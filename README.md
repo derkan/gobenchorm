@@ -1,5 +1,7 @@
 # GO ORM Benchmarks
 
+[![GoDoc](https://godoc.org/github.com/derkan/gobenchorm/benchs?status.svg)](https://godoc.org/github.com/derkan/gobenchorm/benchs)
+
 ### About
 
 ORM benchmarks for GoLang. Originally forked from [orm-benchmark](https://github.com/milkpod/orm-benchmark).
