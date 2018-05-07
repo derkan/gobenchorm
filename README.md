@@ -1,6 +1,6 @@
 # GO ORM Benchmarks
 
-[![Build Status](https://travis-ci.com/derkan/gobenchorm.svg?branch=master)](https://travis-ci.com/derkan/gobenchorm) [![GoDoc](https://godoc.org/github.com/derkan/gobenchorm/benchs?status.svg)](https://godoc.org/github.com/derkan/gobenchorm/benchs) [![Slack Widget](https://camo.githubusercontent.com/984828c0b020357921853f59eaaa65aaee755542/68747470733a2f2f73332e65752d63656e7472616c2d312e616d617a6f6e6177732e636f6d2f6e6774756e612f6a6f696e2d75732d6f6e2d736c61636b2e706e67)](http://gophers.slack.com/messages/awesome)
+[![Build Status](https://travis-ci.com/derkan/gobenchorm.svg?branch=master)](https://travis-ci.com/derkan/gobenchorm) [![GoDoc](https://godoc.org/github.com/derkan/gobenchorm/benchs?status.svg)](https://godoc.org/github.com/derkan/gobenchorm/benchs) [![Coverage Status](https://coveralls.io/repos/github/derkan/gobenchorm/badge.svg?branch=master)](https://coveralls.io/github/derkan/gobenchorm?branch=master)
 
 
 ### About
