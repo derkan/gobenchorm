@@ -27,23 +27,39 @@
 
 [[constraint]]
   name = "github.com/astaxie/beego"
-  version = "1.9.2"
+  branch = "master"
+
+[[constraint]]
+  name = "github.com/coocood/qbs"
+  branch = "master"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/eaigner/hood"
 
 [[constraint]]
   name = "github.com/go-pg/pg"
-  version = "6.11.2"
+  branch = "master"
 
 [[constraint]]
   name = "github.com/go-xorm/xorm"
-  version = "0.6.6"
+  branch = "master"
+
+[[constraint]]
+  name = "github.com/gobuffalo/pop"
+  branch = "master"
 
 [[constraint]]
   name = "github.com/gocraft/dbr"
-  version = "2.1.0"
+  branch = "master"
 
 [[constraint]]
   name = "github.com/jinzhu/gorm"
-  version = "1.9.1"
+  branch = "master"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/jmoiron/modl"
 
 [[constraint]]
   branch = "master"
@@ -59,15 +75,15 @@
 
 [[constraint]]
   name = "github.com/samonzeweb/godb"
-  version = "1.0.7"
+  branch = "master"
 
 [[constraint]]
   name = "gopkg.in/gorp.v2"
-  version = "v2.1"
+  version = "2.1.0"
 
 [[constraint]]
   name = "upper.io/db.v3"
-  version = "3.5.2"
+  branch = "master"
 
 [prune]
   go-tests = true
