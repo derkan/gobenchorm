@@ -3,7 +3,7 @@ package benchs
 import (
 	"fmt"
 
-	"github.com/gocraft/dbr"
+	"github.com/gocraft/dbr/v2"
 )
 
 var dbrsession *dbr.Session
@@ -11,11 +11,11 @@ var dbrsession *dbr.Session
 func init() {
 	st := NewSuite("dbr")
 	st.InitF = func() {
-		st.AddBenchmark("Insert", 2000 * ORM_MULTI, 0, DbrInsert)
-		st.AddBenchmark("BulkInsert 100 row", 500 * ORM_MULTI, 0, DbrInsertMulti)
-		st.AddBenchmark("Update", 2000 * ORM_MULTI, 0, DbrUpdate)
-		st.AddBenchmark("Read", 4000 * ORM_MULTI, 0, DbrRead)
-		st.AddBenchmark("MultiRead limit 1000", 2000 * ORM_MULTI, 1000, DbrReadSlice)
+		st.AddBenchmark("Insert", 2000*ORM_MULTI, 0, DbrInsert)
+		st.AddBenchmark("BulkInsert 100 rows", 500*ORM_MULTI, 0, DbrInsertMulti)
+		st.AddBenchmark("Update", 2000*ORM_MULTI, 0, DbrUpdate)
+		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, DbrRead)
+		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, DbrReadSlice)
 
 		conn, _ := dbr.Open("postgres", ORM_SOURCE, nil)
 		sess := conn.NewSession(nil)
@@ -38,7 +38,6 @@ func DbrInsert(b *B) {
 		}
 	}
 }
-
 
 func DbrInsertMulti(b *B) {
 	var m *Model

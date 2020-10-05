@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"database/sql"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -64,13 +65,13 @@ func NewBeegoModel() *BeegoModel {
 }
 
 func init() {
-	st := NewSuite("beego_orm")
+	st := NewSuite("beego")
 	st.InitF = func() {
 		st.AddBenchmark("Insert", 2000*ORM_MULTI, 0, BeegoOrmInsert)
 		st.AddBenchmark("BulkInsert 100 row", 500*ORM_MULTI, 0, BeegoOrmInsertMulti)
 		st.AddBenchmark("Update", 2000*ORM_MULTI, 0, BeegoOrmUpdate)
 		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, BeegoOrmRead)
-		st.AddBenchmark("MultiRead limit 1000",2000*ORM_MULTI, 1000, BeegoOrmReadSlice)
+		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, BeegoOrmReadSlice)
 
 		orm.RegisterDataBase("default", "postgres", ORM_SOURCE, ORM_MAX_IDLE, ORM_MAX_CONN)
 		orm.RegisterModel(new(BeegoModel))
@@ -99,14 +100,14 @@ func BeegoOrmInsertMulti(b *B) {
 	var ms []*BeegoModel
 	wrapExecute(b, func() {
 		initDB3()
-		ms = make([]*BeegoModel, 0, 100)
-		for i := 0; i < 100; i++ {
-			ms = append(ms, NewBeegoModel())
-		}
 	})
 
 	for i := 0; i < b.N; i++ {
-		if _, err := bo.InsertMulti(100, ms); err != nil {
+		ms = make([]*BeegoModel, 100)
+		for i := 0; i < 100; i++ {
+			ms[i] = NewBeegoModel()
+		}
+		if _, err := bo.InsertMulti(100, &ms); err != nil {
 			fmt.Println(err)
 			b.FailNow()
 		}
@@ -166,7 +167,7 @@ func BeegoOrmReadSlice(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		var models []*BeegoModel
+		var models []BeegoModel
 		if _, err := bo.QueryTable("beego_model").Filter("id__gt", 0).Limit(b.L).All(&models); err != nil {
 			fmt.Println(err)
 			b.FailNow()

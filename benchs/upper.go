@@ -3,12 +3,11 @@ package benchs
 import (
 	"fmt"
 
-	_ "github.com/lib/pq"
-	"upper.io/db.v3/lib/sqlbuilder"
-	"upper.io/db.v3/postgresql"
+	"github.com/upper/db/v4"
+	"github.com/upper/db/v4/adapter/postgresql"
 )
 
-var sess sqlbuilder.Database
+var sess db.Session
 
 type VModel struct {
 	Id      int64  `db:"id,omitempty"`
@@ -26,7 +25,7 @@ func NewVModel() *VModel {
 	m.Name = "Orm Benchmark"
 	m.Title = "Just a Benchmark for fun"
 	m.Fax = "99909990"
-	m.Web = "http://blog.milkpod29.me"
+	m.Web = "https://github.com/derkan/gobenchorm"
 	m.Age = 100
 	m.Right = true
 	m.Counter = 1000
@@ -35,13 +34,13 @@ func NewVModel() *VModel {
 }
 
 func init() {
-	st := NewSuite("db.v3")
+	st := NewSuite("upper")
 	st.InitF = func() {
-		st.AddBenchmark("Insert", 2000 * ORM_MULTI, 0, DBv3Insert)
-		st.AddBenchmark("BulkInsert 100 row", 500 * ORM_MULTI, 0, DBv3InsertMulti)
-		st.AddBenchmark("Update", 2000 * ORM_MULTI, 0, DBv3Update)
-		st.AddBenchmark("Read", 4000 * ORM_MULTI, 0, DBv3Read)
-		st.AddBenchmark("MultiRead limit 1000", 2000 * ORM_MULTI, 1000, DBv3ReadSlice)
+		st.AddBenchmark("Insert", 2000*ORM_MULTI, 0, UpperIOInsert)
+		st.AddBenchmark("BulkInsert 100 row", 500*ORM_MULTI, 0, UpperIOInsertMulti)
+		st.AddBenchmark("Update", 2000*ORM_MULTI, 0, UpperIOUpdate)
+		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, UpperIORead)
+		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, UpperIOReadSlice)
 		settings, err := postgresql.ParseURL(ORM_SOURCE)
 		checkErr(err)
 		db, err := postgresql.Open(settings)
@@ -50,7 +49,7 @@ func init() {
 	}
 }
 
-func DBv3Insert(b *B) {
+func UpperIOInsert(b *B) {
 	var m *VModel
 	wrapExecute(b, func() {
 		initDB()
@@ -68,14 +67,14 @@ func DBv3Insert(b *B) {
 	}
 }
 
-func DBv3InsertMulti(b *B) {
+func UpperIOInsertMulti(b *B) {
 	wrapExecute(b, func() {
 		initDB()
 	})
 	var err error
 	for i := 0; i < b.N; i++ {
 		v := NewVModel()
-		batch := sess.InsertInto("models").Columns("name", "title", "fax", "web", "age", "right", "counter").Batch(100)
+		batch := sess.SQL().InsertInto("models").Columns("name", "title", "fax", "web", "age", "right", "counter").Batch(100)
 		go func() {
 			for i := 0; i < 100; i++ {
 				batch.Values(v.Name, v.Title, v.Fax, v.Web, v.Age, v.Right, v.Counter)
@@ -89,7 +88,7 @@ func DBv3InsertMulti(b *B) {
 	}
 }
 
-func DBv3Update(b *B) {
+func UpperIOUpdate(b *B) {
 	var m *VModel
 	col := sess.Collection("models")
 	wrapExecute(b, func() {
@@ -107,7 +106,7 @@ func DBv3Update(b *B) {
 	}
 }
 
-func DBv3Read(b *B) {
+func UpperIORead(b *B) {
 	var m *VModel
 	col := sess.Collection("models")
 	wrapExecute(b, func() {
@@ -119,13 +118,13 @@ func DBv3Read(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		if err := sess.SelectFrom("models").Where("id = ?", m.Id).One(m); err != nil {
+		if err := sess.SQL().SelectFrom("models").Where("id = ?", m.Id).One(m); err != nil {
 			b.FailNow()
 		}
 	}
 }
 
-func DBv3ReadSlice(b *B) {
+func UpperIOReadSlice(b *B) {
 	var m *VModel
 	wrapExecute(b, func() {
 		initDB()
@@ -140,8 +139,8 @@ func DBv3ReadSlice(b *B) {
 		}
 	})
 	for i := 0; i < b.N; i++ {
-		var models []*VModel
-		if err := sess.SelectFrom("models").Where("id > ?", 0).Limit(b.L).All(&models); err != nil {
+		var models []VModel
+		if err := sess.SQL().SelectFrom("models").Where("id > ?", 0).Limit(b.L).All(&models); err != nil {
 			fmt.Println(err)
 			b.FailNow()
 		}

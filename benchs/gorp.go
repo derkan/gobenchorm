@@ -4,8 +4,9 @@ import (
 	"fmt"
 
 	"database/sql"
+
+	"github.com/go-gorp/gorp/v3"
 	_ "github.com/lib/pq"
-	"gopkg.in/gorp.v2"
 )
 
 var dbmap *gorp.DbMap
@@ -58,7 +59,7 @@ func GorpInsert(b *B) {
 	})
 	for i := 0; i < b.N; i++ {
 		m.Id = 0
-		if err := dbmap.Insert(m); err!=nil {
+		if err := dbmap.Insert(m); err != nil {
 			fmt.Println(err)
 			b.FailNow()
 		}
@@ -67,15 +68,15 @@ func GorpInsert(b *B) {
 
 func GorpInsertMulti(b *B) {
 	panic(fmt.Errorf("Problematic bulk insert, too slow"))
-	var ms [] interface{}
+	var ms []interface{}
 	wrapExecute(b, func() {
 		initDB()
 	})
 
 	for i := 0; i < b.N; i++ {
-		ms = make([]interface{}, 0, 100)
+		ms = make([]interface{}, 100)
 		for i := 0; i < 100; i++ {
-			ms = append(ms, NewGOModel())
+			ms[i] = NewGOModel()
 		}
 		if err := dbmap.Insert(ms...); err != nil {
 			fmt.Println(err)
@@ -137,9 +138,10 @@ func GorpReadSlice(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		var models []*GOModel
-		if _, err := dbmap.Select(&models, "SELECT * FROM models WHERE id>:id", map[string]interface{}{
-			"id":0,
+		var models []GOModel
+		if _, err := dbmap.Select(&models, "SELECT * FROM models WHERE id>:id LIMIT :limit", map[string]interface{}{
+			"id":    0,
+			"limit": b.L,
 		}); err != nil {
 			fmt.Println(err)
 			b.FailNow()

@@ -12,11 +12,11 @@ var mo *modl.DbMap
 func init() {
 	st := NewSuite("modl")
 	st.InitF = func() {
-		st.AddBenchmark("Insert", 2000 * ORM_MULTI, 0, ModlInsert)
-		st.AddBenchmark("BulkInsert 100 row", 500 * ORM_MULTI, 0, ModlInsertMulti)
-		st.AddBenchmark("Update", 2000 * ORM_MULTI, 0, ModlUpdate)
-		st.AddBenchmark("Read", 4000 * ORM_MULTI, 0, ModlRead)
-		st.AddBenchmark("MultiRead limit 1000", 2000 * ORM_MULTI, 1000, ModlReadSlice)
+		st.AddBenchmark("Insert", 2000*ORM_MULTI, 0, ModlInsert)
+		st.AddBenchmark("BulkInsert 100 row", 500*ORM_MULTI, 0, ModlInsertMulti)
+		st.AddBenchmark("Update", 2000*ORM_MULTI, 0, ModlUpdate)
+		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, ModlRead)
+		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, ModlReadSlice)
 
 		dbDialect := modl.PostgresDialect{}
 		db, err := sql.Open(dbDialect.DriverName(), ORM_SOURCE)
@@ -98,7 +98,7 @@ func ModlReadSlice(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		var models []*Model
+		var models []Model
 		if err := mo.Select(&models, fmt.Sprintf("SELECT * FROM model WHERE id > 0 LIMIT %d", b.L)); err != nil {
 			fmt.Println(err)
 			b.FailNow()

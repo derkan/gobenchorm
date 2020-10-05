@@ -1,9 +1,10 @@
 package benchs
 
 import (
-	"fmt"
-	"github.com/eaigner/hood"
 	"database/sql"
+	"fmt"
+
+	"github.com/eaigner/hood"
 )
 
 var hd *hood.Hood
@@ -31,6 +32,7 @@ func NewHdModel() *HdModel {
 
 	return m
 }
+
 // initHdDB recreates tables before executing any benchmark.
 func initHdDB() {
 	sqls := []string{
@@ -64,11 +66,11 @@ func initHdDB() {
 func init() {
 	st := NewSuite("hood")
 	st.InitF = func() {
-		st.AddBenchmark("Insert", 2000 * ORM_MULTI, 0, HdInsert)
-		st.AddBenchmark("BulkInsert 100 row", 500 * ORM_MULTI, 0, HdInsertMulti)
-		st.AddBenchmark("Update", 2000 * ORM_MULTI, 0, HdUpdate)
-		st.AddBenchmark("Read", 4000 * ORM_MULTI, 0, HdRead)
-		st.AddBenchmark("MultiRead limit 1000", 2000 * ORM_MULTI, 1000, HdReadSlice)
+		st.AddBenchmark("Insert", 2000*ORM_MULTI, 0, HdInsert)
+		st.AddBenchmark("BulkInsert 100 row", 500*ORM_MULTI, 0, HdInsertMulti)
+		st.AddBenchmark("Update", 2000*ORM_MULTI, 0, HdUpdate)
+		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, HdRead)
+		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, HdReadSlice)
 		db, err := sql.Open("postgres", ORM_SOURCE)
 		if err != nil {
 			fmt.Printf("conn err: %v\n", err)
@@ -101,9 +103,9 @@ func HdInsertMulti(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		ms = make([]HdModel, 0, 100)
+		ms = make([]HdModel, 100)
 		for i := 0; i < 100; i++ {
-			ms = append(ms, *NewHdModel())
+			ms[i] = *NewHdModel()
 		}
 		if _, err := hd.SaveAll(&ms); err != nil {
 			fmt.Println(err)

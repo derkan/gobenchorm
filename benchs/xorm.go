@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"database/sql"
+
 	"github.com/go-xorm/xorm"
 )
 
@@ -65,11 +66,11 @@ func NewXormModel() *XormModel {
 func init() {
 	st := NewSuite("xorm")
 	st.InitF = func() {
-		st.AddBenchmark("Insert", 2000 * ORM_MULTI, 0, XormInsert)
-		st.AddBenchmark("BulkInsert 100 row", 500 * ORM_MULTI, 0, XormInsertMulti)
-		st.AddBenchmark("Update", 2000 * ORM_MULTI, 0, XormUpdate)
-		st.AddBenchmark("Read", 4000 * ORM_MULTI, 0, XormRead)
-		st.AddBenchmark("MultiRead limit 1000", 2000 * ORM_MULTI, 1000, XormReadSlice)
+		st.AddBenchmark("Insert", 2000*ORM_MULTI, 0, XormInsert)
+		st.AddBenchmark("BulkInsert 100 row", 500*ORM_MULTI, 0, XormInsertMulti)
+		st.AddBenchmark("Update", 2000*ORM_MULTI, 0, XormUpdate)
+		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, XormRead)
+		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, XormReadSlice)
 
 		engine, _ := xorm.NewEngine("postgres", ORM_SOURCE)
 
@@ -77,7 +78,7 @@ func init() {
 		engine.SetMaxOpenConns(ORM_MAX_CONN)
 
 		xo = engine.NewSession()
-		xo.NoCache() 
+		xo.NoCache()
 	}
 }
 
@@ -98,15 +99,15 @@ func XormInsert(b *B) {
 }
 
 func XormInsertMulti(b *B) {
-	var ms []*XormModel
+	var ms []XormModel
 	wrapExecute(b, func() {
 		initDB2()
-		ms = make([]*XormModel, 0, 100)
-		for i := 0; i < 100; i++ {
-			ms = append(ms, NewXormModel())
-		}
 	})
 	for i := 0; i < b.N; i++ {
+		ms = make([]XormModel, 100)
+		for i := 0; i < 100; i++ {
+			ms[i] = *NewXormModel()
+		}
 		if _, err := xo.InsertMulti(&ms); err != nil {
 			fmt.Println(err)
 			b.FailNow()
@@ -167,7 +168,7 @@ func XormReadSlice(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		var models []*XormModel
+		var models []XormModel
 		if err := xo.Table("models").Where("id > ?", 0).NoCache().Limit(b.L).Find(&models); err != nil {
 			fmt.Println(err)
 			b.FailNow()

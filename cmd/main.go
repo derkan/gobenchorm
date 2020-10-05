@@ -20,7 +20,7 @@ func (opts *ListOpts) String() string {
 }
 
 func (opts *ListOpts) Set(value string) error {
-	if value == "all" || strings.Index(" " + strings.Join(benchs.BrandNames, " ") + " ", " " + value + " ") != -1 {
+	if value == "all" || strings.Index(" "+strings.Join(benchs.BrandNames, " ")+" ", " "+value+" ") != -1 {
 	} else {
 		return fmt.Errorf("wrong run name %s", value)
 	}
@@ -46,7 +46,7 @@ func main() {
 	flag.IntVar(&benchs.ORM_MAX_CONN, "max_conn", 200, "max open conns")
 	flag.StringVar(&benchs.ORM_SOURCE, "source", "host=localhost port=5432 user=bench password=pass dbname=benchdb sslmode=disable", "postgres dsn source")
 	flag.IntVar(&benchs.ORM_MULTI, "multi", 1, "base query nums x multi")
-	flag.Var(&orms, "orm", "orm name: all, " + strings.Join(benchs.BrandNames, ", "))
+	flag.Var(&orms, "orm", "orm name: all, "+strings.Join(benchs.BrandNames, ", "))
 	flag.Parse()
 
 	var all bool
@@ -72,7 +72,7 @@ func main() {
 		benchs.RunBenchmark(n)
 	}
 
-	fmt.Println("\nReports: \n")
+	fmt.Printf("\nReports: \n\n")
 	fmt.Print(benchs.MakeReport())
 
 }

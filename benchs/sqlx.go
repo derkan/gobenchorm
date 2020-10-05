@@ -12,11 +12,11 @@ var sqlxdb *sqlx.DB
 func init() {
 	st := NewSuite("sqlx")
 	st.InitF = func() {
-		st.AddBenchmark("Insert", 2000 * ORM_MULTI, 0, SqlxInsert)
-		st.AddBenchmark("BulkInsert 100 row", 500 * ORM_MULTI, 0, SqlxInsertMulti)
-		st.AddBenchmark("Update", 2000 * ORM_MULTI, 0, SqlxUpdate)
-		st.AddBenchmark("Read", 4000 * ORM_MULTI, 0, SqlxRead)
-		st.AddBenchmark("MultiRead limit 1000", 2000 * ORM_MULTI, 1000, SqlxReadSlice)
+		st.AddBenchmark("Insert", 2000*ORM_MULTI, 0, SqlxInsert)
+		st.AddBenchmark("BulkInsert 100 row", 500*ORM_MULTI, 0, SqlxInsertMulti)
+		st.AddBenchmark("Update", 2000*ORM_MULTI, 0, SqlxUpdate)
+		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, SqlxRead)
+		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, SqlxReadSlice)
 
 		db, err := sqlx.Connect("postgres", ORM_SOURCE)
 		checkErr(err)
@@ -89,7 +89,7 @@ func SqlxReadSlice(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		var models []*Model
+		var models []Model
 		if err := sqlxdb.Select(&models, "SELECT * FROM models WHERE id > $1 LIMIT $2", 0, b.L); err != nil {
 			fmt.Println(err)
 			b.FailNow()

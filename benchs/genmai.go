@@ -75,9 +75,9 @@ func GenmaiInsertMulti(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		ms = make([]*GModel, 0, 100)
+		ms = make([]*GModel, 100)
 		for i := 0; i < 100; i++ {
-			ms = append(ms, NewGModel())
+			ms[i] = NewGModel()
 		}
 		if _, err := genmaidb.Insert(&ms); err != nil {
 			fmt.Println(err)

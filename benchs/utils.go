@@ -16,6 +16,7 @@ type Model struct {
 	Right   bool
 	Counter int64
 }
+
 // NewModel initializes a new model struct for inserts
 func NewModel() *Model {
 	m := new(Model)
@@ -31,11 +32,12 @@ func NewModel() *Model {
 }
 
 var (
-	ORM_MULTI int
+	ORM_MULTI    int
 	ORM_MAX_IDLE int
 	ORM_MAX_CONN int
-	ORM_SOURCE string
+	ORM_SOURCE   string
 )
+
 // checkErr prints and exists on error
 func checkErr(err error) {
 	if err != nil {

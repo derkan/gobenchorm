@@ -76,9 +76,9 @@ func GoDBInsertMulti(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		ms = make([]*GDModel, 0, 100)
+		ms = make([]*GDModel, 100)
 		for i := 0; i < 100; i++ {
-			ms = append(ms, NewGDModel())
+			ms[i] = NewGDModel()
 		}
 		if err := godbcon.BulkInsert(&ms).Do(); err != nil {
 			fmt.Printf("bulkinsert err: %v\n", err)
@@ -138,29 +138,13 @@ func GoDBReadSlice(b *B) {
 			}
 		}
 	})
-	/*
-		f, err := os.Create("/tmp/godb.cprof")
-		if err != nil {
-			log.Fatal(err)
-		}
-		pprof.StartCPUProfile(f)
-		defer pprof.StopCPUProfile()
-	*/
+
 	for i := 0; i < b.N; i++ {
-		var models []*GDModel
+		var models []GDModel
 		if err := godbcon.Select(&models).Where("id > ?", 0).Limit(b.L).Do(); err != nil {
 			fmt.Printf("slice err: %v\n", err)
 			b.FailNow()
 		}
 	}
-	/*runtime.GC()
-	memProfile, err := os.Create("/tmp/godb.mprof")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer memProfile.Close()
-	//go tool pprof --alloc_space mem /tmp/godb.mprof
-	if err := pprof.WriteHeapProfile(memProfile); err != nil {
-		log.Fatal(err)
-	}*/
+
 }

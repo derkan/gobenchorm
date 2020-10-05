@@ -69,11 +69,6 @@ func RawInsertMulti(b *B) {
 	var ms []*Model
 	wrapExecute(b, func() {
 		initDB()
-
-		ms = make([]*Model, 0, 100)
-		for i := 0; i < 100; i++ {
-			ms = append(ms, NewModel())
-		}
 	})
 
 	var valuesSQL string

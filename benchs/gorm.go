@@ -3,7 +3,8 @@ package benchs
 import (
 	"fmt"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var gormdb *gorm.DB
@@ -17,7 +18,7 @@ func init() {
 		st.AddBenchmark("Read", 4000*ORM_MULTI, 0, GormRead)
 		st.AddBenchmark("MultiRead limit 1000", 2000*ORM_MULTI, 1000, GormReadSlice)
 
-		conn, err := gorm.Open("postgres", ORM_SOURCE)
+		conn, err := gorm.Open(postgres.Open(ORM_SOURCE), &gorm.Config{})
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -103,7 +104,7 @@ func GormReadSlice(b *B) {
 	})
 
 	for i := 0; i < b.N; i++ {
-		var models []*Model
+		var models []Model
 		d := gormdb.Where("id > ?", 0).Limit(b.L).Find(&models)
 		if d.Error != nil {
 			fmt.Println(d.Error)
