@@ -40,6 +40,7 @@ func DbrInsert(b *B) {
 }
 
 func DbrInsertMulti(b *B) {
+	panic(fmt.Errorf("Does not support bulk insert"))
 	var m *Model
 	wrapExecute(b, func() {
 		initDB()
